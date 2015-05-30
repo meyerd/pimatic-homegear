@@ -2,8 +2,7 @@
   "name": "pimatic-homegear",
   "description": "Plugin to interface devices via Homegear.",
   "author": "Dominik Meyer",
-  "contributors": [
-  ],
+  "contributors": [],
   "main": "thermostat.coffee",
   "files": [
     "doc",
@@ -19,7 +18,7 @@
     "url": "git://github.com/meyerd/pimatic-homegear.git"
   },
   "dependencies": {
-    "homematic-xmlrpc": ">=1.0.0"
+    "homematic-xmlrpc": "^1.0.0"
   },
   "peerDependencies": {
     "pimatic": "0.8.* && >=0.8.31"
@@ -30,4 +29,3 @@
     "npm": ">1.1.x"
   }
 }
-

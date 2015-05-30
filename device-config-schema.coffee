@@ -52,7 +52,7 @@ module.exports = {
         type: "string"
         default: ""
   }
-  Homemgear: {
+  Homegear: {
     title: "Homegear config options"
     type: "object"
     properties: {}
