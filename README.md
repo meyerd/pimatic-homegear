@@ -1,5 +1,5 @@
-Pimatic Homematic Plugin
-========================
+Pimatic Homegear Plugin
+=======================
 
 Plugin to interface with homegear (https://www.homegear.eu).
 
