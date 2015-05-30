@@ -19,9 +19,12 @@ module.exports = (env) ->
         @hmclient.methodCall('init', ['http://' + '192.168.0.196' + ':' + '2015', 'pimatic-homegear', 5], (err, result) =>
           if err
             env.logger.error "error calling init on homegear " + err
+            reject null
           if @config.debug
             env.logger.debug "called init function to homegear successfully " + result
         )
+        resolve null
+        return
       ).timeout(60000).catch( (error) ->
         env.logger.error "Error on connecting to homegear: #{error.message}"
         env.logger.debug error.stack
@@ -46,10 +49,28 @@ module.exports = (env) ->
           env.logger.debug "homegear called unimplemented function", method, "with params", params
       )
 
+      ###
       @hmserver.on('system.listMethods', (err, params, callback) =>
         if @config.debug
           env.logger.debug "homegear called system.listMethods", params
-        callback(null, ['error', 'event'])
+        callback(null, ['error', 'event', 'listDevices'])
+      )
+      ###
+
+      @hmserver.on('system.multicall', (err, params, callback) =>
+        results = []
+        for method, ps in params
+          do (method, ps, @config, results) ->
+            if @config.debug
+              env.logger.debug "homegear multicalled", method, ps
+            results.push('')
+        callback(null, results);
+      )
+
+      @hmserver.on('listDevices', (err, params, callback) =>
+        if @config.debug
+          env.logger.debug "homegear called listDevices", params
+        callback(null, []);
       )
 
       @hmserver.on('event', (err, params, callback) =>
@@ -60,7 +81,7 @@ module.exports = (env) ->
 
       @hmserver.on('newDevices', (err, params, callback) =>
         if @config.debug
-          env.logger.debug "newDevice " + params
+          env.logger.debug "homegear called newDevices " + params
         callback()
       )
 

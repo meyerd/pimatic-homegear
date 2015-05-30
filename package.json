@@ -23,7 +23,7 @@
   "peerDependencies": {
     "pimatic": "0.8.* && >=0.8.31"
   },
-  "configSchema": "thermostat-config-schema.coffee",
+  "configSchema": "homegear-config-schema.coffee",
   "engines": {
     "node": ">0.8.x",
     "npm": ">1.1.x"

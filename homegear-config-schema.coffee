@@ -1,5 +1,5 @@
 module.exports = {
-  title: "homegear-thermostat config"
+  title: "homegear config"
   type: "object"
   properties:
     host:

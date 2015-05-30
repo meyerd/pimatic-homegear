@@ -28,7 +28,7 @@ module.exports = {
         description: "Show the preset temperatures in the gui"
         type: "boolean"
         default: true
-      guiShowTemperatueInput:
+      guiShowTemperatureInput:
         description: "Show the temperature input spinbox in the gui"
         type: "boolean"
         default: true
