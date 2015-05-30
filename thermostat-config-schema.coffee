@@ -7,9 +7,9 @@ module.exports = {
       type: "string"
       default: "127.0.0.1"
     port:
-      description: "Homegear port (Default: 2000)"
+      description: "Homegear port (Default: 2001)"
       type: "integer"
-      default: 62910
+      default: 2001
     debug:
       description: "Output update message from homegear and additional infos"
       type: "boolean"
