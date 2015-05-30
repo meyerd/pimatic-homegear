@@ -1,0 +1,31 @@
+{
+  "name": "pimatic-homematic",
+  "description": "Plugin to interface devices via Homematic.",
+  "author": "Dominik Meyer",
+  "contributors": [
+  ],
+  "main": "maxthermostat.coffee",
+  "files": [
+    "doc",
+    "thermostat.coffee",
+    "README.md",
+    "thermostat-config-schema.coffee",
+    "device-config-schema.coffee"
+  ],
+  "version": "0.0.1",
+  "homepage": "http://github.com/meyerd/pimatic-homematic",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/meyerd/pimatic-homematic.git"
+  },
+  "dependencies": {
+  },
+  "peerDependencies": {
+    "pimatic": "0.8.* && >=0.8.31"
+  },
+  "configSchema": "thermostat-config-schema.coffee",
+  "engines": {
+    "node": ">0.8.x",
+    "npm": ">1.1.x"
+  }
+}
