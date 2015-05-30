@@ -43,22 +43,31 @@ module.exports = (env) ->
 
       @hmserver.on('NotFound', (method, params) =>
         if @config.debug
-          env.logger.debug "called NotFound", params
+          env.logger.debug "homegear called unimplemented function", method, "with params", params
+      )
+
+      @hmserver.on('system.listMethods', (err, params, callback) =>
+        if @config.debug
+          env.logger.debug "homegear called system.listMethods", params
+        callback(null, ['error', 'event'])
       )
 
       @hmserver.on('event', (err, params, callback) =>
         if @config.debug
           env.logger.debug "event " + params
+        callback()
       )
 
       @hmserver.on('newDevices', (err, params, callback) =>
         if @config.debug
           env.logger.debug "newDevice " + params
+        callback()
       )
 
       @hmserver.on('deleteDevices', (err, params, callback) =>
         if @config.debug
           env.logger.debug "deleteDevices " + params
+        callback()
       )
 
       deviceConfigDef = require("./device-config-schema")
