@@ -23,13 +23,13 @@ module.exports = (env) ->
         env.logger.debug error.stack
         return
       )
-      setTimeout( => 
+      setTimeout( () ->
       	@hmclient.methodCall('init', ['http://' + @config.localIP + ':' + @config.localRPCPort, 'pimatic-homegear', 5], (err, result) =>
           if err
             env.logger.error "error calling init on homegear " + err
           if @config.debug
             env.logger.debug "called init function to homegear successfully " + result
-	)
+	      )
       , 10000)
       # @mc.once("connected", =>
       #    if @config.debug
