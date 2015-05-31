@@ -13,24 +13,33 @@ module.exports = (env) ->
 
     init: (app, @framework, @config) =>
       # Promise that is resolved when the connection is established
+      ###
       @_lastAction = new Promise( (resolve, reject) =>
-        @hmserver = xmlrpc.createServer({host: '0.0.0.0', port: 2015})
-        @hmclient = xmlrpc.createClient({host: @config.host, port: @config.port, path: '/'})
-	resolve null
+
+	      resolve null
         return
       ).timeout(60000).catch( (error) ->
         env.logger.error "Error on connecting to homegear: #{error.message}"
         env.logger.debug error.stack
         return
       )
-      setTimeout( () ->
-      	@hmclient.methodCall('init', ['http://' + @config.localIP + ':' + @config.localRPCPort, 'pimatic-homegear', 5], (err, result) =>
-          if err
-            env.logger.error "error calling init on homegear " + err
-          if @config.debug
-            env.logger.debug "called init function to homegear successfully " + result
+      ###
+      # TODO: there has to be a trigger when pimatic is running instead of timeout
+      @hmserver = xmlrpc.createServer({host: '0.0.0.0', port: 2015})
+      @hmclient = xmlrpc.createClient({host: @config.host, port: @config.port, path: '/'})
+
+      delay = (time, fn, args...) ->
+        setTimeout fn, time, args...
+
+      setTimeout ((client, config) -> client.methodCall('init',
+                                                        ['http://' + config.localIP + ':' + config.localRPCPort, 'pimatic-homegear', 5],
+                                                        (err, result) =>
+                                                          if err
+                                                            env.logger.error "error calling init on homegear " + err
+                                                          if config.debug
+                                                            env.logger.debug "called init function to homegear successfully " + result
 	      )
-      , 10000)
+      ), 20000, @hmclient, @config
       # @mc.once("connected", =>
       #    if @config.debug
       #      env.logger.debug "Connected, waiting for first update from cube"
