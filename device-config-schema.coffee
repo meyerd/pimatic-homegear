@@ -4,10 +4,14 @@ module.exports = {
     title: "HomematicHeatingThermostat config options"
     type: "object"
     properties:
-      rfAddress:
-        description: "The Device RF address"
-        type: "string"
-        default: ""
+      peerID:
+        description: "The Device PeerID"
+        type: "number"
+        default: 2
+      channel:
+        description: "The Device channel"
+        type: "number"
+        default: 4
       comfyTemp:
         description: "The defined comfy temperature"
         type: "number"
@@ -43,14 +47,18 @@ module.exports = {
         type: "string"
         default: ""
   }
-  HomematicWallThermostat: {
-    title: "HomematicWallThermostat config options"
+  HomematicThermostat: {
+    title: "HomematicThermostat config options"
     type: "object"
     properties:
-      rfAddress:
-        description: "The Device RF address"
-        type: "string"
-        default: ""
+      peerID:
+        description: "The Device PeerID"
+        type: "number"
+        default: 2
+      channel:
+        description: "The Device Channel"
+        type: "number"
+        default: 4
   }
   Homegear: {
     title: "Homegear config options"
