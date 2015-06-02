@@ -40,14 +40,6 @@ module.exports = (env) ->
                                                             env.logger.debug "called init function to homegear successfully " + result
 	      )
       ), 20000, @hmclient, @config
-      # @mc.once("connected", =>
-      #    if @config.debug
-      #      env.logger.debug "Connected, waiting for first update from cube"
-      #    @mc.once("update", resolve)
-      #  )
-      #  @mc.once('error', reject)
-      #  return
-      #)
 
       @hmserver.on('error', (method, params) =>
         if @config.debug
@@ -127,11 +119,37 @@ module.exports = (env) ->
         createCallback: (config, lastState) -> new Homegear(config, lastState)
       })
 
-    setTemperatureSetpoint: (rfAddress, mode, value) ->
+    setTemperatureSetpoint: (peerID, channel, mode, value) ->
       @_lastAction = settled(@_lastAction).then( =>
         if @config.debug
-          env.logger.debug "setTemperatureSetpoint", rfAddress, mode, value
-        #@mc.setTemperatureAsync(rfAddress, mode, value)
+          env.logger.debug "setTemperatureSetpoint", peerID, channel, mode, value
+        if mode == 'auto'
+          @hmclient.methodCall('setValue', [peerID, channel, 'AUTO_MODE', true], (err, value) =>
+            if err
+              env.logger.error "error setting auto mode for peer", peerID
+              env.logger.debug err.stack
+          )
+        else if mode == 'manu'
+          @hmclient.methodCall('setValue', [peerID, channel, 'MANU_MODE', value], (err, value) =>
+            if err
+              env.logger.error "error setting manu mode for peer", peerID
+              env.logger.debug err.stack
+          )
+        else if mode == 'party'
+          env.logger.error "party mode not implemented"
+        else if mode == 'boost'
+          @hmclient.methodCall('setValue', [peerID, channel, 'BOOST_MODE', true], (err, value) =>
+            if err
+              env.logger.error "error setting boost mode for peer", peerID
+              env.logger.debug err.stack
+          )
+
+        if not mode == 'manu'
+          @hmclient.methodCall('setValue', [peerID, channel, 'SET_TEMPERATURE', value], (err, value) =>
+            if err
+              env.logger.error "error setting setpoint for peer", peerID
+              env.logger.debug err.stack
+          )
       )
       return @_lastAction
 
@@ -174,7 +192,7 @@ module.exports = (env) ->
       @id = @config.id
       @name = @config.name
       @_temperatureSetpoint = lastState?.temperatureSetpoint?.value
-      @_mode = lastState?.mode?.value or 1
+      @_mode = lastState?.mode?.value or "auto"
       @_battery = lastState?.battery?.value or 0.0
       ###
       @_temperature = lastState?.temperature?.value or 0.0
@@ -271,7 +289,7 @@ module.exports = (env) ->
       temp = @_temperatureSetpoint
       if mode is "auto"
         temp = null
-      return plugin.setTemperatureSetpoint(@config.rfAddress, mode, temp).then( =>
+      return plugin.setTemperatureSetpoint(@config.peerID, @config.channel, mode, temp).then( =>
         @_lastSendTime = new Date().getTime()
         #@_setSynced(false)
         @_setMode(mode)
@@ -279,7 +297,7 @@ module.exports = (env) ->
 
     changeTemperatureTo: (temperatureSetpoint) ->
       if @temperatureSetpoint is temperatureSetpoint then return
-      return plugin.setTemperatureSetpoint(@config.rfAddress, @_mode, temperatureSetpoint).then( =>
+      return plugin.setTemperatureSetpoint(@config.peerID, @config.channel, @_mode, temperatureSetpoint).then( =>
         @_lastSendTime = new Date().getTime()
         #@_setSynced(false)
         @_setSetpoint(temperatureSetpoint)
