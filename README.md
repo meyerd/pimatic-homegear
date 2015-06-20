@@ -1,12 +1,10 @@
 Pimatic Homegear Plugin
 =======================
 
-Plugin to interface with homegear (https://www.homegear.eu).
+Plugin to interface with homegear (https://www.homegear.eu) to control MAX! and Homematic thermostats.
 
 Based on pimatic-max (https://github.com/pimatic/pimatic-max)
 and homematic-manager (https://github.com/hobbyquaker/homematic-manager).
-
-Plugin to control the MAX! Thermostat (http://www.eq-3.de)
 
 Configuration
 -------------

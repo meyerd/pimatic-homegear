@@ -1,7 +1,7 @@
 {
   "name": "pimatic-homegear",
   "description": "Plugin to interface devices via Homegear.",
-  "author": "Dominik Meyer",
+  "author": "Dominik Meyer <meyerd@mytum.de>",
   "contributors": [],
   "main": "homegear.coffee",
   "files": [
