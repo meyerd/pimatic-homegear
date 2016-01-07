@@ -256,6 +256,9 @@ module.exports = (env) ->
             when 'VALVE_STATE'
               #env.logger.debug "HomematicHeatingThermostat valve state", value
               @_setValve(value)
+            when 'LOCKED'
+              #just prevent errors
+              env.logger.debug "HomematicHeatingThermostat locked state", value
             else
               env.logger.error "HomematicHeatingThermostat unknown parameterName", parameterName
           @_setSynced(true)
