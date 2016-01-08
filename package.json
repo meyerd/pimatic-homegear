@@ -18,7 +18,7 @@
     "url": "git://github.com/meyerd/pimatic-homegear.git"
   },
   "dependencies": {
-    "homematic-xmlrpc": "git+https://github.com/hobbyquaker/homematic-xmlrpc"
+    "homematic-xmlrpc": "^1.0.1"
   },
   "peerDependencies": {
     "pimatic": "0.8.* && >=0.8.31"
