@@ -130,7 +130,8 @@ module.exports = (env) ->
               env.logger.debug err.stack
           )
         else if mode == 'manu'
-          @hmclient.methodCall('setValue', [peerID, channel, 'MANU_MODE', value], (err, value) =>
+          toSend = {explicitDouble: value}
+          @hmclient.methodCall('setValue', [peerID, channel, 'MANU_MODE', toSend], (err, value) =>
             if err
               env.logger.error "error setting manu mode for peer", peerID
               env.logger.debug err.stack
