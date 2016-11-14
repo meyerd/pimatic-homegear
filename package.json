@@ -11,7 +11,7 @@
     "homegear-config-schema.coffee",
     "device-config-schema.coffee"
   ],
-  "version": "0.1.0",
+  "version": "0.1.1",
   "homepage": "http://github.com/meyerd/pimatic-homegear",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "homematic-xmlrpc": "^1.0.1"
   },
   "peerDependencies": {
-    "pimatic": "0.8.* && >=0.8.31"
+    "pimatic": ">=0.8.31 <1.0.0"
   },
   "configSchema": "homegear-config-schema.coffee",
   "engines": {

@@ -307,6 +307,9 @@ module.exports = (env) ->
         @_setSetpoint(temperatureSetpoint)
       )
 
+    destroy: () ->
+      super()
+
   class HomematicThermostat extends env.devices.TemperatureSensor
     _temperature: null
 
@@ -327,6 +330,9 @@ module.exports = (env) ->
 
     getTemperature: -> Promise.resolve(@_temperature)
 
+    destroy: () ->
+      super()
+
   class Homegear extends env.devices.Sensor
 
     constructor: (@config, lastState) ->
@@ -334,5 +340,7 @@ module.exports = (env) ->
       @name = @config.name
       super()
 
-  return plugin
+    destroy: () ->
+      super()
 
+  return plugin
